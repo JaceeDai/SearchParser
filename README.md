@@ -23,4 +23,4 @@ Maven
 
 ## 鸣谢
 
-@qzw1210 的jpinyin库
+[@qzw1210](https://github.com/qzw1210) 的jpinyin库
