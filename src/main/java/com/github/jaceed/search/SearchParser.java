@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Jacee.
@@ -33,9 +31,6 @@ public final class SearchParser {
     private static int matchPattern(String expression, String key, MatchType type) {
         List<String> words = new ArrayList<>();
         List<Character> letters = new ArrayList<>();
-
-//         key = key.replaceAll(" {1,}", "");
-//         if(!key.matches("[a-zA-Z]*")) return 0;
 
         int pattern = 0;
         switch (type) {
@@ -309,26 +304,6 @@ public final class SearchParser {
             pattern |= 1 << i;
         }
         return pattern;
-    }
-
-    public static boolean isChinese(String str) {
-        String regex = "[\u4e00-\u9fa5]+";
-        return str.matches(regex);
-    }
-
-    public static boolean isEnglish(String str) {
-        String regex = "[a-zA-Z]+";
-        return str.matches(regex);
-    }
-
-    public static boolean containsEnglish(String source) {
-        Pattern pattern = Pattern.compile("[a-zA-Z]+");
-        Matcher matcher = pattern.matcher(source);
-        return matcher.find();
-    }
-
-    public static String filterSpaces(String source) {
-        return source.replaceAll(" +", "");
     }
 
 }
