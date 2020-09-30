@@ -4,7 +4,7 @@
 
 Gradle
 ```gradle
-    implementation 'io.github.jaceed:searchparser:1.0.0'
+    implementation 'io.github.jaceed:searchparser:1.0.1'
 ```
 或
 
@@ -13,7 +13,7 @@ Maven
     <dependency>
        <groupId>io.github.jaceed</groupId>
        <artifactId>searchparser</artifactId>
-       <version>1.0.0</version>
+       <version>1.0.1</version>
     </dependency>
 ```
 
