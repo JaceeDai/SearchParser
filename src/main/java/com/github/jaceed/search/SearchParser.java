@@ -17,17 +17,17 @@ public final class SearchParser {
 
     private static final String TAG = "SearchParser";
     private static final boolean DEBUG = false;
-    public static final String SEPARATOR = "_";
+    private static final String SEPARATOR = "_";
     private static final String EN_TAG = "#";
 
-    private static class Instance {
+    /*private static class Instance {
         private final static SearchParser sInstance = new SearchParser();
     }
 
     public static SearchParser getInstance() {
         return Instance.sInstance;
     }
-
+*/
     private static int matchPattern(String expression, String key, MatchType type) {
         List<String> words = new ArrayList<>();
         List<Character> letters = new ArrayList<>();
@@ -236,16 +236,22 @@ public final class SearchParser {
      * @return The Generated expression. Words are separated by {@link #SEPARATOR} with a type tag
      * marked by {@link  MatchType} in the front.
      */
-    public static String makeSearchExpression(String str) throws PinyinException {
+    public static String makeSearchExpression(String str) throws PinyinException, IllegalArgumentException {
         StringBuilder res = new StringBuilder();
         String pinyin = PinyinHelper.convertToPinyinString(str, SEPARATOR, PinyinFormat.WITHOUT_TONE);
         if (pinyin.equals(str)) {
+            if (str.length() >= 32) {
+                throw new IllegalArgumentException("English string's length should be smaller than 32!");
+            }
             res.append(MatchType.EN);
             res.append(SEPARATOR);
             res.append(str);
         } else {
             boolean hasEnWord = false;
             String[] words = pinyin.split(SEPARATOR);
+            if (words.length >= 32) {
+                throw new IllegalArgumentException("Characters should be less than 32!");
+            }
             for (String word : words) {
                 res.append(SEPARATOR);
                 if (str.contains(word)) {
