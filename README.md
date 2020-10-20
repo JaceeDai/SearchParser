@@ -1,5 +1,7 @@
 # SearchParser
 
+![searchParserVersion](https://maven-badges.herokuapp.com/maven-central/io.github.jaceed/searchparser/badge.svg)
+
 ## 版本
 
 Gradle
