@@ -6,7 +6,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class SearchParserTest {
 
@@ -21,10 +20,6 @@ public class SearchParserTest {
         libraries.put("这不是个测试", SearchParser.makeSearchExpression("这不是个测试"));
         libraries.put("这不是个测试这不是个测试这不是个测试这不是个测试这不是个测试结束吧", SearchParser.makeSearchExpression("这不是个测试这不是个测试这不是个测试这不是个测试这不是个测试结束吧"));
         libraries.put("测试Hello混合", SearchParser.makeSearchExpression("测试Hello混合"));
-
-        for (Map.Entry<String, String> i : libraries.entrySet()) {
-            System.out.println(i.getKey() + " -> " + i.getValue());
-        }
     }
 
     @Test
