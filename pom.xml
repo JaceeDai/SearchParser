@@ -4,7 +4,7 @@
     <groupId>io.github.jaceed</groupId>
     <artifactId>searchparser</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <name>search-parser</name>
     <description>
         A search helper including some string utils
