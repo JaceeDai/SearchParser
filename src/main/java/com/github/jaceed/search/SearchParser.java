@@ -28,11 +28,11 @@ public final class SearchParser {
         return Instance.sInstance;
     }
 */
-    private static int matchPattern(String expression, String key, MatchType type) {
+    private static long matchPattern(String expression, String key, MatchType type) {
         List<String> words = new ArrayList<>();
         List<Character> letters = new ArrayList<>();
 
-        int pattern = 0;
+        long pattern = 0L;
         switch (type) {
             case CH:
                 String[] chList = expression.split(SEPARATOR);
@@ -61,9 +61,9 @@ public final class SearchParser {
         return pattern;
     }
 
-    private static int calculateChPattern(List<String> words, final int offsetWords, String key, final int offsetKey, int pattern) {
+    private static long calculateChPattern(List<String> words, final int offsetWords, String key, final int offsetKey, long pattern) {
         if (offsetKey == key.length()) {
-            return 0;
+            return 0L;
         }
         for (int i = offsetWords; i < words.size(); i++) {
             String word = words.get(i);
@@ -79,11 +79,11 @@ public final class SearchParser {
 
             if (len > 0) {
                 if (i == words.size() - 1 && len < key.length() - offsetKey) {
-                    return -1;
+                    return -1L;
                 }
-                pattern |= 1 << i;
-                int value = calculateChPattern(words, i + 1, key, offsetKey + len, pattern);
-                if (value == -1) {
+                pattern |= 1L << i;
+                long value = calculateChPattern(words, i + 1, key, offsetKey + len, pattern);
+                if (value == -1L) {
                     return calculateChPattern(words, i + 1, key, 0, 0);
                 } else {
                     pattern |= value;
@@ -91,12 +91,12 @@ public final class SearchParser {
                 }
             }
         }
-        return -1;
+        return -1L;
     }
 
-    private static int calculateEnPattern(final String originalExp, List<String> words, final int offsetWords, String key, final int offsetKey, int pattern) {
+    private static long calculateEnPattern(final String originalExp, List<String> words, final int offsetWords, String key, final int offsetKey, long pattern) {
         if (offsetKey == key.length()) {
-            return 0;
+            return 0L;
         }
 
         for (int i = offsetWords; i < words.size(); i++) {
@@ -113,16 +113,16 @@ public final class SearchParser {
 
             if (len > 0) {
                 if (i == words.size() - 1 && len < key.length() - offsetKey) {
-                    return -1;
+                    return -1L;
                 }
 
                 int offset = originalExp.indexOf(word);
                 for (int pos = offset; pos < offset + len; pos++) {
-                    pattern |= 1 << pos;
+                    pattern |= 1L << pos;
                 }
 
-                int value = calculateEnPattern(originalExp, words, i + 1, key, offsetKey + len, pattern);
-                if (value == -1) {
+                long value = calculateEnPattern(originalExp, words, i + 1, key, offsetKey + len, pattern);
+                if (value == -1L) {
                     return calculateEnPattern(originalExp, words, i + 1, key, 0, 0);
                 } else {
                     pattern |= value;
@@ -130,10 +130,10 @@ public final class SearchParser {
                 }
             }
         }
-        return -1;
+        return -1L;
     }
 
-    private static int calculateChEnPattern(List<String> words, final int offsetWords, String key, final int offsetKey, int offsetExtra, int pattern) {
+    private static long calculateChEnPattern(List<String> words, final int offsetWords, String key, final int offsetKey, int offsetExtra, long pattern) {
         if (offsetKey == key.length()) {
             return 0;
         }
@@ -154,18 +154,18 @@ public final class SearchParser {
 
                 if (len > 0) {
                     if (i == words.size() - 1 && len < key.length() - offsetKey) {
-                        return -1;
+                        return -1L;
                     }
 
                     int offset = i + offsetExtra;
                     for (int pos = offset; pos < offset + len; pos++) {
-                        pattern |= 1 << pos;
+                        pattern |= 1L << pos;
                     }
                     // Update extra offset from English word
                     offsetExtra += valueStr.length() - 1;
 
-                    int value = calculateChEnPattern(words, i + 1, key, offsetKey + len, offsetExtra, pattern);
-                    if (value == -1) {
+                    long value = calculateChEnPattern(words, i + 1, key, offsetKey + len, offsetExtra, pattern);
+                    if (value == -1L) {
                         return calculateChEnPattern(words, i + 1, key, 0, offsetExtra, 0);
                     } else {
                         pattern |= value;
@@ -188,12 +188,12 @@ public final class SearchParser {
 
                 if (len > 0) {
                     if (i == words.size() - 1 && len < key.length() - offsetKey) {
-                        return -1;
+                        return -1L;
                     }
 
-                    pattern |= 1 << (i + offsetExtra);
-                    int value = calculateChEnPattern(words, i + 1, key, offsetKey + len, offsetExtra, pattern);
-                    if (value == -1) {
+                    pattern |= 1L << (i + offsetExtra);
+                    long value = calculateChEnPattern(words, i + 1, key, offsetKey + len, offsetExtra, pattern);
+                    if (value == -1L) {
                         return calculateChEnPattern(words, i + 1, key, 0, offsetExtra, 0);
                     } else {
                         pattern |= value;
@@ -202,7 +202,7 @@ public final class SearchParser {
                 }
             }
         }
-        return -1;
+        return -1L;
     }
 
     /**
@@ -212,9 +212,9 @@ public final class SearchParser {
      * @param pattern Pattern value, from method {@link #matchPattern(String, String)} in general.
      * @return Matched position array. Unmatched pattern will get an empty array.
      */
-    public static int[] getMatchedIndex(int pattern) {
-        if (DEBUG) System.out.println(TAG + " getMatchedIndex: pattern: " + Integer.toBinaryString(Integer.valueOf(pattern)));
-        int[] res = new int[Integer.bitCount(pattern)];
+    public static int[] getMatchedIndex(long pattern) {
+        if (DEBUG) System.out.println(TAG + " getMatchedIndex: pattern: " + Long.toBinaryString(pattern));
+        int[] res = new int[Long.bitCount(pattern)];
         int mark = 1;
         int pos = 0;
         for (int i = 0; i < res.length; i++) {
@@ -240,7 +240,7 @@ public final class SearchParser {
         StringBuilder res = new StringBuilder();
         String pinyin = PinyinHelper.convertToPinyinString(str, SEPARATOR, PinyinFormat.WITHOUT_TONE);
         if (pinyin.equals(str)) {
-            if (str.length() >= 32) {
+            if (str.length() >= 64) {
                 throw new IllegalArgumentException("English string's length should be smaller than 32!");
             }
             res.append(MatchType.EN);
@@ -249,7 +249,7 @@ public final class SearchParser {
         } else {
             boolean hasEnWord = false;
             String[] words = pinyin.split(SEPARATOR);
-            if (words.length >= 32) {
+            if (words.length >= 64) {
                 throw new IllegalArgumentException("Characters should be less than 32!");
             }
             for (String word : words) {
@@ -274,7 +274,7 @@ public final class SearchParser {
      * @return The matched pattern value. -1 or 0 indicates match failed. Value greater than 0 indicates all the
      * matched indexes of the given expression string bit by bit from lower to higher, 1 means matched and 0 otherwise.
      */
-    public static int matchPattern(String expression, String key) {
+    public static long matchPattern(String expression, String key) {
         MatchType type;
         String typeStr = expression.substring(0, expression.indexOf(SEPARATOR));
         switch (typeStr) {
