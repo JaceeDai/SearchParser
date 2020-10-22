@@ -6,7 +6,7 @@
 
 Gradle
 ```gradle
-    implementation 'io.github.jaceed:searchparser:1.0.2'
+    implementation 'io.github.jaceed:searchparser:searchParserVersion'
 ```
 或
 
@@ -15,9 +15,11 @@ Maven
     <dependency>
        <groupId>io.github.jaceed</groupId>
        <artifactId>searchparser</artifactId>
-       <version>1.0.2</version>
+       <version>searchParserVersion</version>
     </dependency>
 ```
+
+> `searchParserVersion`替换为指定版本号
 
 ## 说明
 
